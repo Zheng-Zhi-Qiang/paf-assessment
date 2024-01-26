@@ -54,7 +54,7 @@ public class ListingsRepository {
 		ProjectionOperation projOps = Aggregation.project("_id").and("$address.suburb").as("_id");
 		Aggregation pipeline = Aggregation.newAggregation(matchOps, projOps);
 		AggregationResults<Document> results = template.aggregate(pipeline, "listings", Document.class);
-		return results.getMappedResults().stream().map(doc -> doc.getString("_id")).toList();
+		return results.getMappedResults().stream().map(doc -> doc.getString("_id")).distinct().toList();
 	}
 
 	/*
